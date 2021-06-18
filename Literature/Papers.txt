@@ -1,0 +1,2 @@
+MacKenzie et al - Accuracy Measures for Evaluating Computer Pointing Devices
+Soukoreff and MacKenzie - Towards a standard for pointing device evaluation, perspectives on 27 years of Fitt's law research in HCI

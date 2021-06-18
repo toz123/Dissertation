@@ -1,0 +1,48 @@
+<html>
+<head>
+    <style>
+        .spinner {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            margin: 150px auto;
+        }
+
+        .double-bounce {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: #42a5f5;
+            position: absolute;
+            top: 0;
+            left: 0;
+            -webkit-animation: sk-bounce 5.0s infinite ease-in-out;
+            animation: sk-bounce 5.0s infinite ease-in-out;
+        }
+
+        .double-bounce {
+            -webkit-animation-delay: -1.0s;
+            animation-delay: -1.0s;
+        }
+        
+        @keyframes sk-bounce {
+            0%, 100% {
+                transform: scale(0.3);
+                -webkit-transform: scale(0.3);
+            }
+            50% {
+                transform: scale(1.0);
+                -webkit-transform: scale(1.0);
+                }
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="spinner">
+        <div class="double-bounce"></div>
+    </div>
+</body>
+
+</html>

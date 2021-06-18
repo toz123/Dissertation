@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+		<script src="https://code.createjs.com/1.0.0/tweenjs.min.js"></script>
+		
+		<title>Test Orbit</title>	
+	</head>
+  
+  	<script>
+	
+	// creating the connection with the websocket
+	const ws = new WebSocket("ws://localhost:9001");
+		
+	ws.addEventListener("open", () => {
+		console.log("Connected")
+		
+	});
+	
+	var circle = new createjs.Shape();
+	
+	var centreX = 200;
+	var centreY = 200;
+	var iconSize = 50;
+
+		
+	function init() {
+		
+		// draw central circle
+		circle.graphics.beginFill("#FF0000").drawEllipse(-iconSize/2, -iconSize/2, iconSize, iconSize).endFill();
+		circle.x = centreX;
+		circle.y = centreY;
+		
+		var stage = new createjs.Stage("stage");
+	
+		stage.addChild(circle);
+
+		createjs.Ticker.setFPS(120);
+		
+		//building the animation
+		createjs.Ticker.addEventListener("tick", function(){
+			stage.update();
+		});
+
+		createjs.Tween.get(circle).to({scaleX: 1})
+	}
+	
+	</script>
+	
+	<body onload="init();">
+		<canvas id="stage" width="900" height="900"></canvas>
+	</body>
+	
+	
+</html>

@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+		<script src="https://code.createjs.com/1.0.0/tweenjs.min.js"></script>
+		
+		<title>Test Orbit</title>	
+	</head>
+  
+  	<script>
+	
+	// creating the connection with the websocket
+	const ws = new WebSocket("ws://localhost:9001");
+		
+	ws.addEventListener("open", () => {
+		console.log("Connected")
+		
+	});
+	
+	var target = new createjs.Shape();
+	var circle = new createjs.Shape();
+	
+	var centreX = 200;
+	var centreY = 200;
+	var size = 100;
+	var rotationSpeedInSeconds = 20;
+	var iconSize = 50;
+	var targetSize = 20;
+
+	var msStart = Date.now();
+	
+	function init() {
+		
+		// draw target circle       
+		target.graphics.beginFill("#00FF00").drawEllipse(-targetSize/2, -targetSize/2, targetSize, targetSize).endFill();
+
+		// draw central circle
+		circle.graphics.beginFill("#FF0000").drawEllipse(-iconSize/2, -iconSize/2, iconSize, iconSize).endFill();
+		circle.x = centreX;
+		circle.y = centreY;
+		
+		var stage = new createjs.Stage("stage");
+
+		// starting position
+		var angle = 60;
+		
+		stage.addChild(circle);
+		stage.addChild(target);
+
+		createjs.Ticker.setFPS(120);
+
+		var msOld = Date.now();
+		
+		//building the animation
+		createjs.Ticker.addEventListener("tick", function(){
+			
+			var msCurr = Date.now();
+			
+			var msDiff = msCurr - msOld;
+			msOld = msCurr;
+
+			var msTime = msCurr - msStart;
+			
+			angle += msDiff/1000 * 360 / rotationSpeedInSeconds;
+
+			// unconstrained range of motion 51 degrees
+			// 61.8% was ulnar rotation - 31.5 degrees
+			// remaining was radial - 19.5 degrees
+
+			// take 270 degrees to be the midpoint of flexion
+			// Radial: 270 + 19.5 = 289.5
+			// Ulnar: 270 - 31.5 = 238.5
+
+		    if(angle > 300){
+				angle = 60;
+			}
+			
+			var rads = - angle * Math.PI / 180;
+			
+			if(angle > 180){
+				var rads = angle * Math.PI / 180;
+			}
+
+			var x = size * Math.cos(rads);
+			var y = size * Math.sin(rads);
+			target.x = x + centreX;
+			target.y = y + centreY;
+			
+			var x_position = (x + centreX).toString();
+			var y_position = (y + centreY).toString();
+									
+			ws.send([x_position, y_position, msTime])
+
+			stage.update();
+		});
+
+		// websocket on event when certain message is received do something
+	}
+	
+	</script>
+	
+	<!--call both functions inside onload-->
+	<body onload="init();">
+		<canvas id="stage" width="900" height="900"></canvas>
+		<!-- <button onclick="end()">End</button> -->
+	</body>
+	
+	
+</html>

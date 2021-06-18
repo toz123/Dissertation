@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+  <script src="https://code.createjs.com/1.0.0/tweenjs.min.js"></script>
+    
+  <title>Test Scale</title>
+</head>
+
+<script>
+    var circle = new createjs.Shape();
+
+    function init() {
+		
+		// draw target circle       
+		target.graphics.beginFill("#00FF00").drawEllipse(-targetSize/2, -targetSize/2, targetSize, targetSize).endFill();
+
+		// draw central circle
+		circle.graphics.beginFill("#FF0000").drawEllipse(-iconSize/2, -iconSize/2, iconSize, iconSize).endFill();
+		circle.x = centreX;
+		circle.y = centreY;
+		
+		var stage = new createjs.Stage("stage");
+
+		// starting position
+		var angle = 60;
+		
+		stage.addChild(circle);
+		stage.addChild(target);
+
+        
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas');
+      var path = new paper.Path.Circle({
+          radius: 40,
+          center: new paper.Point(50, 50)
+      });
+
+      path.fillColor = 'red';
+      path.scaling = 1
+      
+      // Comment this part and it will show the red circle
+      path.tween(
+          { scaling: 0.0001, fillColor: 'blue' },
+          { scaling: 1, fillColor: 'purple' },
+          { duration: 1500 }
+      );
+   };
+</script>
+<body>
+    <canvas id="myCanvas" resize></canvas>
+</body>
+</html> -->
